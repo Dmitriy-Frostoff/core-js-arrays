@@ -416,7 +416,7 @@ function calculateBalance(arr) {
   }
 
   // destructure syntax trick: let [a, b] = [num1, num2] => a === num1, b === num2
-  // @type {Array<number>} arrOfEarnings - [[3, 1], [5, 2]] => [2, 3]
+  /** @type {Array<number>} arrOfEarnings - [[3, 1], [5, 2]] => [2, 3] */
   const arrOfEarnings = arr.map(([income, expence]) => income - expence);
   return arrOfEarnings.reduce((sum, num) => sum + num, 0);
 }
