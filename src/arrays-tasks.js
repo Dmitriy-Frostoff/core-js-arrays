@@ -433,8 +433,34 @@ function calculateBalance(arr) {
  *    createChunks(['a', 'b', 'c', 'd', 'e'], 2) => [['a', 'b'], ['c', 'd'], ['e']]
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
-function createChunks(/* arr, chunkSize */) {
-  throw new Error('Not implemented');
+function createChunks(arr, chunkSize) {
+  // [] => []
+  if (arr.length === 0) {
+    return [];
+  }
+
+  const arrCopy = arr.slice();
+
+  return arrCopy.reduce((resArr, elem, index, array) => {
+    // first arr's elem ? => copy arr from 0 to chunkSize (exclude last)
+    if (index === 0) {
+      // caution: Array.push returns the pushed elem!!!
+      resArr.push(array.slice(index, index + chunkSize));
+      return resArr;
+    }
+
+    // copy array from the every index which is divided by chunkSize without remainder
+    // remember!: [7, 8, 9].slice(0, 2) => [7, 8], index === 2 is excluded that case
+    if (index % chunkSize === 0) {
+      // for arr = [1, 2, 3, 4, 5] and chunkSize = 2 => [[1, 2], [3, 4], [5]]
+      // indexOf(3) % 2 === 2 % 2 === 0
+      // indexOf(5) % 2 === 4 % 2 === 0
+      resArr.push(array.slice(index, index + chunkSize));
+      return resArr;
+    }
+
+    return resArr;
+  }, []);
 }
 
 /**
