@@ -405,8 +405,20 @@ function selectMany(arr, childrenSelector) {
  *   calculateBalance([ [ 10, 8 ], [ 1, 5 ] ])  => (10 - 8) + (1 - 5) = 2 + -4 = -2
  *   calculateBalance([]) => 0
  */
-function calculateBalance(/* arr */) {
-  throw new Error('Not implemented');
+function calculateBalance(arr) {
+  if (arr.length === 0) {
+    return 0;
+  }
+
+  // check, that all elems in the arr are finite numbers
+  if (arr.flat().some((elem) => !Number.isFinite(elem))) {
+    throw new Error(`There's not a number in the input array`);
+  }
+
+  // destructure syntax trick: let [a, b] = [num1, num2] => a === num1, b === num2
+  // @type {Array<number>} arrOfEarnings - [[3, 1], [5, 2]] => [2, 3]
+  const arrOfEarnings = arr.map(([income, expence]) => income - expence);
+  return arrOfEarnings.reduce((sum, num) => sum + num, 0);
 }
 
 /**
