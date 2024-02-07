@@ -308,6 +308,45 @@ function distinct(arr) {
  *    createNDimensionalArray(1, 1) => [0]
  */
 function createNDimensionalArray(/* n, size */) {
+  // if typeof elem is digit => number[] filled 0
+  // else if elem is number[] => start again execution from above
+  // else throw new exception because elem type neither number (digit) nor number[]
+  // function resursionTransformDigitIntoArrayFilledZero(
+  //   elem,
+  //   newArraySize,
+  //   eterationCount,
+  //   requireDepth
+  // ) {
+  //   let eterationCountCopy = eterationCount;
+
+  //   if (eterationCountCopy < requireDepth) {
+  //     if (Number.isFinite(elem)) {
+  //       eterationCountCopy += 1;
+  //       return new Array(newArraySize).fill(0);
+  //     }
+
+  //     if (Array.isArray(elem)) {
+  //       eterationCountCopy += 1;
+  //       return resursionTransformDigitIntoArrayFilledZero(
+  //         elem,
+  //         newArraySize,
+  //         eterationCountCopy
+  //       );
+  //     }
+
+  //     throw new Error(
+  //       'Unknown element type. Element must be digit or a number array'
+  //     );
+  //   }
+  // }
+
+  // let resArr = new Array(size).fill(0);
+
+  // resArr = resArr.map((elem) =>
+  //   resursionTransformDigitIntoArrayFilledZero(elem, size, 1, n)
+  // );
+
+  // return resArr;
   throw new Error('Not implemented');
 }
 
@@ -322,8 +361,16 @@ function createNDimensionalArray(/* n, size */) {
  *    flattenArray(['a', ['b', ['c', 'd'], 'e'], 'f']) => ['a', 'b', 'c', 'd', 'e', 'f']
  *    flattenArray([1, 2, 3, 4]) => [1, 2, 3, 4]
  */
-function flattenArray(/* nestedArray */) {
-  throw new Error('Not implemented');
+function flattenArray(nestedArray) {
+  let flatArr = nestedArray.flat();
+
+  // if there's still array inside => flat again
+  if (flatArr.some((elem) => Array.isArray(elem))) {
+    flatArr = flatArr.flat();
+    flattenArray(flatArr);
+  }
+
+  return flatArr;
 }
 
 /**
