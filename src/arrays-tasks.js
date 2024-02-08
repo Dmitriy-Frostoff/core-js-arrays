@@ -650,8 +650,43 @@ function findCommonElements(arr1, arr2) {
  *    findLongestIncreasingSubsequence([3, 10, 2, 1, 20]) => 2
  *    findLongestIncreasingSubsequence([50, 3, 10, 7, 40, 80]) => 3
  */
-function findLongestIncreasingSubsequence(/* nums */) {
-  throw new Error('Not implemented');
+function findLongestIncreasingSubsequence(nums) {
+  /** @type {Array<Array<number>>} arrOfAscendinsNumsChunks */
+  // e.g. [[7, 8, 14], [2], [4, 9, 18, 27]]
+  const arrOfAscendinsNumsChunks = nums.reduce((resArr, num, index, array) => {
+    // e.g. [prevNum, currentNum, 2, 1, 20] => prevNum present =>
+    if (Number.isFinite(array[index - 1])) {
+      // currentNum - prevNum > 0 ? =>
+      if (num - array[index - 1] > 0) {
+        // e.g. resArr[[prevNum]] and currentNum => resArr[[prevNum, currentNum]]
+        resArr.at(-1).push(num);
+        return resArr;
+      }
+
+      // e.g. [3, prevNum, currentNum, 1, 20] =>
+      // currentNum - prevNum < 0 => resArr[[prevPrevNum, prevNum]] and currentNum =>
+      // resArr[[prevPrevNum, prevNum], []]
+      resArr.push([]);
+      // resArr[[prevPrevNum, prevNum]] => resArr[[prevPrevNum, prevNum], [currentNum]]
+      resArr.at(-1).push(num);
+      return resArr;
+    }
+
+    // e.g. [currentNum, 10, 2, 1, 20]
+    // resArr[] => resArr[[]]
+    resArr.push([]);
+    // resArr[[]] => resArr[[currentNum]]
+    resArr.at(-1).push(num);
+    return resArr;
+  }, []);
+
+  /** @type {Array<number>} arrOfAscendinsNumsChunksLengthes */
+  // e.g. [[7, 8, 14], [2], [4, 9, 18, 27]] => [3, 1, 4]
+  const arrOfAscendinsNumsChunksLengthes = arrOfAscendinsNumsChunks.map(
+    (array) => array.length
+  );
+
+  return Math.max(...arrOfAscendinsNumsChunksLengthes);
 }
 
 /**
