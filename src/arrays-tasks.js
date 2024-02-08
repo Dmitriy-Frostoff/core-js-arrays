@@ -614,7 +614,10 @@ function getMaxItems(arr, n) {
     return arr;
   }
 
+  // [ 2, 3, 1 ] => [3, 2, 1]
+  /** @type {Array<number>} arrCopySortedDescending */
   const arrCopySortedDescending = arr.slice().sort((a, b) => b - a);
+  // e.g. [3, 2, 1] and n = 2 => [3, 2]
   return arrCopySortedDescending.slice(0, n);
 }
 
